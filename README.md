@@ -12,14 +12,14 @@ solved past cases.
 The dataset comprises 1138 patient cases and 23 features.
 
 1. MISSING DATA
-I quantified the missingness per feature and visualized patterns using missingno (matrix +
+- I quantified the missingness per feature and visualized patterns using missingno (matrix +
 heatmap).
-I calculated the missing values and the percentage of missing values in the dataset.
+- I calculated the missing values and the percentage of missing values in the dataset.
 
-- BMI has the highest missing value of 137 missing rows (12.04% of the entire dataset)
-- Protein_Creatinine_Ratio, CKD_Risk, UPCR_Severity each have 88 missing rows
+  - BMI has the highest missing value of 137 missing rows (12.04% of the entire dataset)
+  - Protein_Creatinine_Ratio, CKD_Risk, UPCR_Severity each have 88 missing rows
 (7.7%)
-- Systolic_Pressure, Dipstick_Proteinuria, Proteinuria each have 16 missing rows
+  - Systolic_Pressure, Dipstick_Proteinuria, Proteinuria each have 16 missing rows
 (1.41%).
 
 To understand the pattern of missingness, missingno matrix and heatmap visualizations were
