@@ -9,61 +9,60 @@ This repository contains my COM804 project on predicting **Chronic Kidney Diseas
 ## What I built
 
 I implemented a CBR pipeline following the CBR cycle:
-**Retrieve → Reuse → Revise → Retain**, encapsulated in a `CBR` class that stores past cases, computes similarity, predicts labels, and learns feature weights. :contentReference[oaicite:1]{index=1}
+**Retrieve → Reuse → Revise → Retain**, encapsulated in a `CBR` class that stores past cases, computes similarity, predicts labels, and learns feature weights. 
 
 ### Similarity + retrieval (Retrieve)
 - **Categorical features:** similarity = 1 if values match, else 0  
-- **Continuous features:** similarity is based on normalized distance (Min–Max), converted to a 0–1 similarity score :contentReference[oaicite:2]{index=2}
-- A query case is compared against the whole case base and the **top-k most similar** cases are retrieved. :contentReference[oaicite:3]{index=3}
+- **Continuous features:** similarity is based on normalized distance (Min–Max), converted to a 0–1 similarity score
+- A query case is compared against the whole case base and the **top-k most similar** cases are retrieved. 
 
 ### Prediction (Reuse)
 I implemented multiple voting options:
 - Majority voting
 - Similarity-weighted voting
-- Distance-weighted voting (squared weights) :contentReference[oaicite:4]{index=4}
+- Distance-weighted voting (squared weights)
 
 ### Learning feature weights with gradient descent (Revise/Retain)
 A key part of this project is automatic feature-weight learning using **gradient descent** on a validation set:
 - predict using current weights  
 - compute error against an “ideal” similarity (1 for correct-label neighbors, 0 otherwise)  
-- take gradients and update weights to improve accuracy :contentReference[oaicite:5]{index=5}
+- take gradients and update weights to improve accuracy 
 
 ---
 
 ## Data preparation (summary)
 
 ### Missing data
-Missingness was analyzed with missingness plots, and the pattern suggested **Not Missing at Random (NMAR)** due to incomplete records. :contentReference[oaicite:6]{index=6}
+Missingness was analyzed with missingness plots, and the pattern suggested **Not Missing at Random (NMAR)** due to incomplete records.
 
 ### Handling missing data
-- Dropped **88 rows** with missing values in key columns (CKD_Risk, Protein_Creatinine_Ratio, UPCR_Severity), which also reduced missingness in other correlated features. :contentReference[oaicite:7]{index=7}  
-- Used **median imputation** for skewed continuous features. :contentReference[oaicite:8]{index=8}  
-- Used **class-conditional mode imputation** for selected categorical features (mode computed within each CKD stage). :contentReference[oaicite:9]{index=9}  
+- Dropped **88 rows** with missing values in key columns (CKD_Risk, Protein_Creatinine_Ratio, UPCR_Severity), which also reduced missingness in other correlated features. 
+- Used **median imputation** for skewed continuous features.
+- Used **class-conditional mode imputation** for selected categorical features (mode computed within each CKD stage). 
 
 ### Outliers
-Creatinine outliers were removed using the **IQR method** to avoid dominating distance calculations in CBR. :contentReference[oaicite:10]{index=10}
+Creatinine outliers were removed using the **IQR method** to avoid dominating distance calculations in CBR. 
 
 ### Train/test split
-Data was split into **70% train / 30% test** with **stratified sampling** to preserve class distribution. :contentReference[oaicite:11]{index=11}
-
+Data was split into **70% train / 30% test** with **stratified sampling** to preserve class distribution.
 ---
 
 ## Results
 
 ### 1) CKD_Progression (Binary)
-- Trained for **300 epochs** to learn feature weights. :contentReference[oaicite:12]{index=12}  
+- Trained for **300 epochs** to learn feature weights. 
 - **Test Accuracy:** **84%**  
-- **ROC-AUC:** **0.87** :contentReference[oaicite:13]{index=13}  
-- Note: the dataset is imbalanced (around **80.3%** “not progressing” vs **19.7%** “progressing”). :contentReference[oaicite:14]{index=14}
+- **ROC-AUC:** **0.87** 
+- Note: the dataset is imbalanced (around **80.3%** “not progressing” vs **19.7%** “progressing”). 
 
 ### 2) CKD_Stage (Multiclass)
-- Over **300 epochs**, training accuracy improved from **57% → 70%** (loss decreased). :contentReference[oaicite:15]{index=15}  
+- Over **300 epochs**, training accuracy improved from **57% → 70%** (loss decreased).  
 - Top learned feature weights included:
   - Sex (4.34)
   - Occult_Blood_in_Urine (3.00)
   - BMI (1.44)
   - Creatinine (1.43)
-  - Hemoglobin (1.22) :contentReference[oaicite:16]{index=16}  
+  - Hemoglobin (1.22) 
 
 ---
 
@@ -78,4 +77,4 @@ Data was split into **70% train / 30% test** with **stratified sampling** to pre
 ---
 
 ## Notes
-This was implemented as a “from scratch” CBR system (not using a ready-made CBR library), including similarity design, multiple voting rules, and gradient-descent weight learning. :contentReference[oaicite:17]{index=17}
+This was implemented as a “from scratch” CBR system (not using a ready-made CBR library), including similarity design, multiple voting rules, and gradient-descent weight learning.
