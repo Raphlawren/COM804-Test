@@ -2,7 +2,7 @@
 
 This repository contains my COM804 project on predicting **Chronic Kidney Disease (CKD)** outcomes using a custom **Case-Based Reasoning (CBR)** system in Python. The dataset has **1,138 patient cases** and **23 features**, with two targets:
 - **CKD_Progression** (binary: progressing vs not progressing)
-- **CKD_Stage** (multiclass: stages 2–5) :contentReference[oaicite:0]{index=0}
+- **CKD_Stage** (multiclass: stages 2–5)
 
 ---
 
